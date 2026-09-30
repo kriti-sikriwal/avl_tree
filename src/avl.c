@@ -14,8 +14,8 @@ typedef struct Node {
 
 Node *root = NULL;
 
-
 int searchCount = 0;
+int steps = 0;
 
 /* ---------- AVL basics ---------- */
 
@@ -97,10 +97,22 @@ Node *deleteNode(Node *n, int key) {
 }
 
 /* Normal BST search; does NOT change any frequency */
+// Node *find(int key) {
+//     Node *n = root;
+//     while (n && n->key != key) n = key < n->key ? n->left : n->right;
+//     return n;
+// }
+
+
 Node *find(int key) {
     Node *n = root;
-    while (n && n->key != key) n = key < n->key ? n->left : n->right;
-    return n;
+    steps = 0;
+    while (n) {
+        steps++;
+        if (n->key == key) return n;
+        n = key < n->key ? n->left : n->right;
+    }
+    return NULL;
 }
 
 /* Inserts a key if it is not already present; returns its node, or NULL if duplicate */
@@ -265,8 +277,14 @@ int main(void) {
             n->totalFrequency++;
             n->windowFrequency++;
             searchCount++;
-            printf("Node %d found. Total: %d | Window: %d | Searches in window: %d/%d\n",
-                   key, n->totalFrequency, n->windowFrequency, searchCount, SEARCH_LIMIT);
+            // printf("Node %d found. Total: %d | Window: %d | Searches in window: %d/%d\n",
+                //    key, n->totalFrequency, n->windowFrequency, searchCount, SEARCH_LIMIT);
+
+
+            printf("Node %d found in %d step(s). Total: %d | Window: %d | Searches in window: %d/%d\n",
+            key, steps, n->totalFrequency, n->windowFrequency, searchCount, SEARCH_LIMIT);
+
+
             saveTree();
             if (searchCount >= SEARCH_LIMIT) adaptiveCheck();
         }
