@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adaptive AVL Tree – Real-Time Data Management with Usage-Based Adaptation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== Header / hero ===== -->
+  <header class="header">
+    <h1>Adaptive AVL Tree</h1>
+    <p class="subtitle">Real-Time Data Management with Usage-Based Adaptation</p>
+    <p class="intro">Build an AVL tree, interact with it, track search activity, and watch the tree adapt to frequently accessed data while preserving AVL balance.</p>
+  </header>
+
+  <main class="page">
+
+    <!-- ===== Operations ===== -->
+    <section class="card controls" aria-labelledby="controls-heading">
+      <h2 id="controls-heading" class="visually-hidden">Tree operations</h2>
+
+      <div class="control wide">
+        <label for="build-input">Build Tree</label>
+        <div class="row">
+          <input id="build-input" type="text" autocomplete="off" placeholder="50, 30, 70, 20, 40, 60, 80">
+          <button id="build-btn" type="button" class="primary">Build Tree</button>
+          <button id="example-btn" type="button" class="ghost">Load Example</button>
+        </div>
+        <p class="hint muted">Enter whole numbers separated by commas or spaces. Build Tree creates a <strong>new</strong> tree using real AVL insertion.</p>
+      </div>
+
+      <div class="control">
+        <label for="insert-input">Insert Node</label>
+        <div class="row">
+          <input id="insert-input" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 55">
+          <button id="insert-btn" type="button" class="primary">Insert Node</button>
+        </div>
+        <p class="hint muted">Add a new value to the existing AVL tree.</p>
+      </div>
+
+      <div class="control">
+        <label for="search-input">Search</label>
+        <div class="row">
+          <input id="search-input" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 40">
+          <button id="search-btn" type="button" class="primary">Search</button>
+        </div>
+        <p class="hint muted">Successful searches increase the access frequency. Every 10 successful searches, the adaptive check runs.</p>
+      </div>
+
+      <div class="control">
+        <label for="delete-input">Delete Node</label>
+        <div class="row">
+          <input id="delete-input" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 30">
+          <button id="delete-btn" type="button" class="warn">Delete Node</button>
+        </div>
+        <p class="hint muted">Remove a value from the current AVL tree and rebalance it if necessary.</p>
+      </div>
+
+      <div class="control reset">
+        <button id="reset-btn" type="button" class="ghost">Reset Tree</button>
+        <p class="hint muted">Clears the tree, frequencies, search counter, activity log, search results and adaptive state.</p>
+      </div>
+
+      <!-- Friendly messages written by avl.js -->
+      <div id="message" class="message info" role="status" aria-live="polite"></div>
+    </section>
+
+    <div class="layout">
+
+      <!-- ===== Tree visualization ===== -->
+      <section class="card tree-card" aria-labelledby="tree-heading">
+        <div class="tree-head">
+          <h2 id="tree-heading">AVL Tree</h2>
+          <!-- AVL status -->
+          <span id="avl-badge" class="badge-status good"></span>
+        </div>
+        <div class="tree-wrap">
+          <svg id="tree-svg" viewBox="0 0 600 260" preserveAspectRatio="xMidYMin meet" role="img" aria-label="Visualization of the current AVL tree. Select a node to inspect it."></svg>
+        </div>
+        <p class="legend">
+          <span class="key hot"></span> window frequency &gt; 5 &nbsp;
+          <span class="key bubble"></span> number = window frequency &nbsp;·&nbsp;
+          Last Rotation / Adaptive Action: <strong id="last-rotation"></strong>
+        </p>
+      </section>
+
+      <aside class="side" aria-label="Search and adaptive information">
+
+        <!-- ===== Search result ===== -->
+        <section class="card" aria-labelledby="result-heading">
+          <h2 id="result-heading">Search Result</h2>
+          <div id="search-result" aria-live="polite">
+            <p class="muted">Search for a value to see its path and step count.</p>
+          </div>
+        </section>
+
+        <!-- ===== Adaptive monitoring ===== -->
+        <section class="card" aria-labelledby="adaptive-heading">
+          <h2 id="adaptive-heading">Adaptive Monitoring</h2>
+          <p class="muted">The monitoring window counts <strong>successful</strong> searches only. Unsuccessful searches do not count.</p>
+          <p class="big"><span id="window-count"></span></p>
+          <div id="window-dots" class="dots" aria-hidden="true"></div>
+          <p class="muted">0/10 → a fresh window starts &nbsp;·&nbsp; 10/10 → the adaptive check runs</p>
+          <div id="adaptive-box" aria-live="polite">
+            <p class="muted">Waiting for 10 successful searches…</p>
+          </div>
+        </section>
+
+        <!-- ===== Node information ===== -->
+        <section class="card" aria-labelledby="node-heading">
+          <h2 id="node-heading">Node Information</h2>
+          <div id="node-info">
+            <p class="muted">Click a node in the tree to inspect it.</p>
+          </div>
+        </section>
+
+      </aside>
+    </div>
+
+    <!-- ===== Activity log ===== -->
+    <section class="card" aria-labelledby="log-heading">
+      <h2 id="log-heading">Activity Log</h2>
+      <ul id="log" class="log"></ul>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p class="muted">Adaptive AVL Tree for Real-Time Data Management · runs entirely in your browser</p>
+  </footer>
+
+  <script src="avl.js"></script>
+</body>
+</html>
