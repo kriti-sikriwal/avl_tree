@@ -1,6 +1,16 @@
 # Adaptive AVL Tree for Real-Time Data Management
 
-## Overview
+## Project Overview
+
+This project presents an Adaptive AVL Tree designed for real-time data management. It extends the standard AVL tree by tracking data-access frequency and adapting the tree structure when frequently accessed nodes can be safely moved closer to the root while maintaining AVL balance.
+
+The project includes both a C implementation and an interactive web-based demonstration.
+
+👉 **[Open the Adaptive AVL Tree Live Demo](https://kriti-sikriwal.github.io/avl_tree/)**
+
+
+The demo allows users to build, search, insert, delete, and observe the adaptive AVL tree directly in a web browser without requiring a local development environment.
+
 
 The Adaptive AVL Tree for Real-Time Data Management is a C-based project that extends the traditional AVL Tree by tracking how frequently data is accessed.
 
@@ -203,4 +213,3 @@ The trade-off is that other nodes can move slightly deeper. In this example, nod
 ## Future Work
 
 - Benchmark the average search steps with adaptation ON versus OFF on a skewed workload.
-- A web-based visualizer that shows frequently accessed nodes moving up the tree.
